@@ -174,10 +174,10 @@ DATABASE_ROUTERS = ["app.routers.PrimaryReplicaRouter"]
 NUM_DB_REPLICAS = 0
 # Allows collectstatic to run without a database, mainly for Docker builds to collectstatic at build time
 if "DATABASE_URL" in os.environ or "AWS_DATABASE_URL" in os.environ:
-    print(env("AWS_DATABASE_URL", default=env("DATABASE_URL")));
+    print(env("AWS_DATABASE_URL", default=env("DATABASE_URL", default=None)))
     DATABASES = {
         "default": dj_database_url.parse(
-            env("AWS_DATABASE_URL", default=env("DATABASE_URL")), conn_max_age=DJANGO_DB_CONN_MAX_AGE
+            env("AWS_DATABASE_URL", default=env("DATABASE_URL", default=None)), conn_max_age=DJANGO_DB_CONN_MAX_AGE
         ),
     }
     REPLICA_DATABASE_URLS_DELIMITER = env("REPLICA_DATABASE_URLS_DELIMITER", ",")
